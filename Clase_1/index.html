@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clase 1</title>
+</head>
+<body>
+    <script type="text/javascript" src="lib/phaser.js"></script>
+    <script type="text/javascript">
+        window.onload = function(){
+            var config = {
+                type: Phaser.Autp,
+                width: 360,
+                height: 640,
+                scene: {
+                    preload: preload,
+                    create: create,
+                    update: update,
+                }
+            };
+                game = new Phaser.Game(config);
+                selected = "";
+
+            function preload(){
+                this.load.image("backgroud","img/backyard.png")
+                this.load.image("apple","img/apple.png")
+                this.load.image("arrow","img/arrow.png")
+                this.load.image("candy","img/candy.png")
+                this.load.image("rotate","img/rotate.png")
+                this.load.spritesheet("pet","img/pet.png",{
+                    frameWidth: 98,frameHeight:85
+                })
+            }
+
+            function create(){
+                var backgroud = this.add.sprite(0,0,"backgroud");
+                backgroud.setOrigin(0,0);
+
+                var apple = this.add.sprite(100,500,"apple");
+                apple.setInteractive();
+                apple.on("pointerdown",function(){
+                    selected = apple.texture.key;
+                });
+
+                var arrow = this.add.sprite(200,500,"arrow");
+                arrow.setInteractive();
+                arrow.on("pointerdown",function(){
+                    selected = arrow.texture.key;
+                });
+
+                var candy = this.add.sprite(300,500,"candy");
+                candy.setInteractive();
+                candy.on("pointerdown",function(){
+                    selected = candy.texture.key;
+                });
+
+                var rotate = this.add.sprite(50,500,"rotate");
+                rotate.setInteractive();
+                rotate.on("pointerdown",function(){
+                    selected = rotate.texture.key;
+                });
+
+                var pet = this.add.sprite(50,50,"pet");
+                pet.setInteractive();
+                this.input.on("pointerdown",function(){
+                    selected = pet.texture.key;
+                });
+
+                backgroud.setInteractive();
+                backgroud.on("pointerdown",clickScene,this);
+
+            }
+
+            function clickScene(event)
+            {
+                if(selected != ""){
+                    var element = this.add.sprite(
+                        event.x,event.y,selected);
+                    selected = "";
+                }
+            }
+
+            function clone(objet)
+            {
+                console.log(this);
+            }
+            
+            function update(){
+            }
+
+        }
+    </script>
+</body>
+</html>
